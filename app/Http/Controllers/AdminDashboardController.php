@@ -14,7 +14,7 @@ class AdminDashboardController extends Controller
         $users = DB::table('users')->orderBy('name')->paginate(2);
         $actionIcons = [
             "icon:chat | tip:send message | color:green | click:sendMessage('{name}')",
-            "icon:pencil | click:redirect('/user/{id}')",
+            "icon:pencil | click:redirect('/profile/{id}')",
             "icon:trash | color:red | click:deleteUser({id}, '{name}')",
         ];
 

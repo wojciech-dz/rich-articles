@@ -18,7 +18,7 @@
                 <x-articles :articles="$articles" :action_icons="$action_icons" />
             </div>
 
-            <form method="get" class="signup-form">
+            <form method="POST" action="{{ route('article.create') }}">
 
                 <h1 class="my-2 text-2xl font-light text-blue-900/80">{{ __('dashboard.new_article') }}</h1>
 

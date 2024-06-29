@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -26,17 +28,30 @@ class ArticleController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('dashboard');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+//        dd($request);
+        $request->validate([
+            'title' => ['required', 'string', 'max:255', 'unique:'.User::class],
+            'contents' => ['required', 'string', 'max:2000'],
+        ]);
+        $article = Article::create([
+            'title' => $request->title,
+            'contents' => $request->contents,
+            'author_id' => $request->user()->id,
+        ]);
+
+//        event(new Published($article));
+
+        return redirect(route('dashboard', absolute: false));
     }
 
     /**

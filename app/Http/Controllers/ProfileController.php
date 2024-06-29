@@ -12,6 +12,15 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function show(string $id): View
+    {
+        $default_languages = AvailableLocales::AVAILABLE_LOCALES;
+
+        return view('profile.edit', [
+            'user' => User::findOrFail($id)
+        ])->withLanguages($default_languages);
+    }
+
     /**
      * Display the user's profile form.
      */
