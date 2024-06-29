@@ -71,7 +71,9 @@
     <x-bladewind::modal
         name="delete-article"
         type="error" title="{{ __('dashboard.confirm_article_delete') }}">
-        {{ __('dashboard.delete_article_question') }}
+        {{ __('dashboard.delete_article_question-1') }}
+        '<b class="title"></b>'
+        {{ __('dashboard.delete_article_question-2') }}
     </x-bladewind::modal>
 
     <script>

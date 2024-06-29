@@ -27,8 +27,6 @@
         {{ __('dashboard.delete_user_question-1') }}
         '<b class="name"></b>'
         {{ __('dashboard.delete_user_question-2') }}
-        {{--        Are you really sure you want to delete <b class="name"></b>?--}}
-{{--        This action cannot be reversed.--}}
     </x-bladewind::modal>
 
     <x-bladewind::modal
@@ -37,8 +35,6 @@
         {{ __('dashboard.delete_article_question-1') }}
         '<b class="title"></b>'
         {{ __('dashboard.delete_article_question-2') }}
-{{--        Are you really sure you want to delete <b class="title"></b>?--}}
-{{--        This action cannot be reversed.--}}
     </x-bladewind::modal>
 
     <script>
