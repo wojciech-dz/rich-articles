@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class ArticleController extends Controller
@@ -19,7 +20,7 @@ class ArticleController extends Controller
         $articles = DB::table('articles')->orderBy('id')->paginate(3);
         $actionIcons = [
             "icon:pencil | click:redirect('/article/{id}')",
-            "icon:trash | color:red | click:deleteArticle({id}, '{name}')",
+            "icon:trash | color:red | click:deleteArticle({id}, '{title}}')",
         ];
 
         return view('dashboard', ['articles' => $articles, 'action_icons'=>$actionIcons]);
@@ -38,18 +39,18 @@ class ArticleController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-//        dd($request);
         $request->validate([
-            'title' => ['required', 'string', 'max:255', 'unique:'.User::class],
-            'contents' => ['required', 'string', 'max:2000'],
+//            'title' => ['required', 'string', 'max:255', 'unique:'.User::class],
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string', 'max:2000'],
         ]);
-        $article = Article::create([
+        Article::create([
             'title' => $request->title,
-            'contents' => $request->contents,
+            'contents' => $request->content,
             'author_id' => $request->user()->id,
         ]);
 
-//        event(new Published($article));
+//        Session::flash('success', 'Article created successfully!');
 
         return redirect(route('dashboard', absolute: false));
     }

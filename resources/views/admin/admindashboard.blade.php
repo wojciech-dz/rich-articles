@@ -13,7 +13,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div>
-                <x-users-admin :users="$users" :action_icons="$action_icons" />
+                <x-users-admin :users="$users" :action_icons="$users_icons" />
+            </div>
+            <div>
+                <x-articles :articles="$articles" :action_icons="$articles_icons" />
             </div>
         </div>
     </div>

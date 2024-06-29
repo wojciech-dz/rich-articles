@@ -18,16 +18,31 @@
                 <x-articles :articles="$articles" :action_icons="$action_icons" />
             </div>
 
-            <form method="POST" action="{{ route('article.create') }}">
+            <form method="POST" action="{{ route('article.store') }}">
+                @csrf
 
                 <h1 class="my-2 text-2xl font-light text-blue-900/80">{{ __('dashboard.new_article') }}</h1>
 
                 <div>
-                    <x-bladewind::input type="text" label="{{ __('dashboard.article_title') }}" required="true"  />
+                    <x-bladewind::input
+                        id="title"
+                        name="title"
+                        type="text"
+                        label="{{ __('dashboard.article_title') }}"
+                        placeholder="{{ __('dashboard.article_title') }}"
+                        required="true"  />
                 </div>
 
                 <div>
-                    <x-texteditor />
+                    <x-bladewind::textarea
+                        id="contents"
+                        name="content"
+                        label="{{ __('dashboard.article_contents') }}"
+                        placeholder="{{ __('dashboard.new_article') }}"
+                        required="true"
+                        error_message="{{ __('dashboard.fill_article_contents') }}"
+                        show_error_inline="true"
+                    />
                 </div>
 
                 <div class="text-center">

@@ -12,12 +12,21 @@ class AdminDashboardController extends Controller
     public function index(Request $request): View
     {
         $users = DB::table('users')->orderBy('name')->paginate(2);
-        $actionIcons = [
+        $usersIcons = [
             "icon:chat | tip:send message | color:green | click:sendMessage('{name}')",
             "icon:pencil | click:redirect('/profile/{id}')",
             "icon:trash | color:red | click:deleteUser({id}, '{name}')",
         ];
+        $articlesIcons = [
+            "icon:trash | color:red | click:deleteArticle({id}, '{title}')",
+        ];
+        $articles = DB::table('articles')->orderBy('title')->paginate(5);
 
-        return view('admin.admindashboard', ['users' => $users, 'action_icons'=>$actionIcons]);
+        return view('admin.admindashboard', [
+            'users' => $users,
+            'articles' =>$articles,
+            'users_icons'=>$usersIcons,
+            'articles_icons'=>$articlesIcons,
+        ]);
     }
 }
