@@ -2,6 +2,7 @@
 
 return [
     'dashboard' => 'Pulpit',
+    'language' => 'Jazyk',
     'login_success' => 'Jesteś zalogowany!',
     'articles' => 'Artykuły',
     'new_article' => 'Nowy artykuł',

@@ -50,7 +50,12 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        $route = $user->isAdmin() ? 'admindashboard' : 'dashboard';
+        $route = 'admindashboard';
+        if (!$request->user()->isAdmin()) {
+            $route = 'dashboard';
+            $locale = $request->user()->localization;
+            session(['locale' => $locale]);
+        }
 
         return redirect(route($route, absolute: false));
     }

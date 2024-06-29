@@ -2,6 +2,7 @@
 
 return [
     'dashboard' => 'Dashboard',
+    'language' => 'Language',
     'login_success' => "You're logged in!",
     'articles' => 'Articles',
     'new_article' => "New article",
