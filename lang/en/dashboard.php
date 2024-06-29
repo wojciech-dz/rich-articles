@@ -9,4 +9,10 @@ return [
     'article_contents' => 'Article contents',
     'article_title' => 'Article title',
     'fill_article_contents' => 'Article contents cannot be empty',
+    'confirm_article_delete' => 'Confirm Article Deletion',
+    'delete_article_question-1' => 'Are you really sure you want to delete article ',
+    'delete_article_question-2' => '? This action cannot be reversed.',
+    'confirm_user_delete' => 'Confirm User Deletion',
+    'delete_user_question-1' => 'Are you really sure you want to delete user ',
+    'delete_user_question-2' => '? This action cannot be reversed.',
 ];

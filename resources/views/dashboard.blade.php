@@ -1,7 +1,7 @@
-<x-bladewind::notification />
 
 <x-app-layout>
     <x-slot name="header">
+        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('dashboard.dashboard') }}
         </h2>
@@ -12,6 +12,7 @@
         </div>
     </x-slot>
 
+    <x-bladewind::notification />
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div>
@@ -30,13 +31,17 @@
                         type="text"
                         label="{{ __('dashboard.article_title') }}"
                         placeholder="{{ __('dashboard.article_title') }}"
-                        required="true"  />
+                        required="true"
+                        show_error_inline="true"
+                    />
                 </div>
 
                 <div>
                     <x-bladewind::textarea
-                        id="contents"
-                        name="content"
+                        id="meat"
+                        name="meat"
+{{--                        toolbar="true"--}}
+                        rows="5"
                         label="{{ __('dashboard.article_contents') }}"
                         placeholder="{{ __('dashboard.new_article') }}"
                         required="true"
@@ -53,7 +58,8 @@
                         outline="true"
                         border_width="2"
                         can_submit="true"
-                        class="mt-3">
+                        class="mt-3"
+                    >
                         {{ __('dashboard.publish') }}
                     </x-bladewind::button>
                 </div>
@@ -61,4 +67,17 @@
             </form>
         </div>
     </div>
+
+    <x-bladewind::modal
+        name="delete-article"
+        type="error" title="{{ __('dashboard.confirm_article_delete') }}">
+        {{ __('dashboard.delete_article_question') }}
+    </x-bladewind::modal>
+
+    <script>
+        deleteArticle = (id, title) => {
+            showModal('delete-article');
+            domEl('.bw-delete-article .title').innerText = `${title}`;
+        }
+    </script>
 </x-app-layout>

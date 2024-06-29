@@ -17,10 +17,9 @@ class ArticleController extends Controller
      */
     public function index(Request $request): View
     {
-        $articles = DB::table('articles')->orderBy('id')->paginate(3);
+        $articles = DB::table('articles')->orderBy('title')->paginate(3);
         $actionIcons = [
-            "icon:pencil | click:redirect('/article/{id}')",
-            "icon:trash | color:red | click:deleteArticle({id}, '{title}}')",
+            "icon:trash | color:red | click:deleteArticle({id}, '{title}')",
         ];
 
         return view('dashboard', ['articles' => $articles, 'action_icons'=>$actionIcons]);
@@ -40,13 +39,13 @@ class ArticleController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-//            'title' => ['required', 'string', 'max:255', 'unique:'.User::class],
-            'title' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string', 'max:2000'],
+            'title' => 'required|string|max:255|unique:App\Models\Article,title',
+//            'title' => ['required', 'string', 'max:255'],
+            'meat' => 'required|string|max:2000',
         ]);
         Article::create([
             'title' => $request->title,
-            'contents' => $request->content,
+            'contents' => $request->meat,
             'author_id' => $request->user()->id,
         ]);
 

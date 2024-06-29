@@ -20,4 +20,42 @@
             </div>
         </div>
     </div>
+
+    <x-bladewind::modal
+        name="delete-user"
+        type="error" title="{{ __('dashboard.confirm_user_delete') }}">
+        {{ __('dashboard.delete_user_question-1') }}
+        '<b class="name"></b>'
+        {{ __('dashboard.delete_user_question-2') }}
+        {{--        Are you really sure you want to delete <b class="name"></b>?--}}
+{{--        This action cannot be reversed.--}}
+    </x-bladewind::modal>
+
+    <x-bladewind::modal
+        name="delete-article"
+        type="error" title="{{ __('dashboard.confirm_article_delete') }}">
+        {{ __('dashboard.delete_article_question-1') }}
+        '<b class="title"></b>'
+        {{ __('dashboard.delete_article_question-2') }}
+{{--        Are you really sure you want to delete <b class="title"></b>?--}}
+{{--        This action cannot be reversed.--}}
+    </x-bladewind::modal>
+
+    <script>
+        deleteUser = (id, name) => {
+            console.log(id, name);
+            showModal('delete-user');
+            domEl('.bw-delete-user .name').innerText = `${name}`;
+        }
+
+        deleteArticle = (id, title) => {
+            console.log(id, title);
+            showModal('delete-article');
+            domEl('.bw-delete-article .title').innerText = `${title}`;
+        }
+
+        redirect = (url) => {
+            window.open(url);
+        }
+    </script>
 </x-app-layout>
