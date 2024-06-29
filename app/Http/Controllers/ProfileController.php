@@ -13,15 +13,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function show(string $id): View
-    {
-        $default_languages = AvailableLocales::AVAILABLE_LOCALES;
-
-        return view('profile.edit', [
-            'user' => User::findOrFail($id)
-        ])->withLanguages($default_languages);
-    }
-
     /**
      * Display the user's profile form.
      */
@@ -40,7 +31,6 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
-
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
@@ -69,5 +59,15 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function toggleAdmin(string $id)
+    {
+        if ($user = User::findOrFail($id)) {
+            $user->is_admin = !$user->is_admin;
+            $user->save();
+        }
+
+        return redirect()->intended(route('admindashboard', absolute: false));
     }
 }

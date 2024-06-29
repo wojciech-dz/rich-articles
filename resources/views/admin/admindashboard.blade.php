@@ -22,6 +22,13 @@
     </div>
 
     <x-bladewind::modal
+        name="toggle-admin"
+        type="error" title="{{ __('dashboard.confirm_toggle_admin') }}">
+        {{ __('dashboard.toggle_admin_question') }}
+        '<b class="name"></b>'?
+    </x-bladewind::modal>
+
+    <x-bladewind::modal
         name="delete-user"
         type="error" title="{{ __('dashboard.confirm_user_delete') }}">
         {{ __('dashboard.delete_user_question-1') }}
@@ -38,6 +45,12 @@
     </x-bladewind::modal>
 
     <script>
+        toggleAdmin = (id, name) => {
+            console.log(id, name);
+            showModal('toggle-admin');
+            domEl('.bw-toggle-admin .name').innerText = `${name}`;
+        }
+
         deleteUser = (id, name) => {
             console.log(id, name);
             showModal('delete-user');

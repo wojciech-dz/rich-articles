@@ -13,6 +13,8 @@ return [
     'confirm_article_delete' => 'Potwierdź usunięcie artykułu',
     'delete_article_question-1' => 'Czy jesteś pewien, że chcesz usunąć artykuł ',
     'delete_article_question-2' => '? Akcja jest nieodwracalna.',
+    'confirm_toggle_admin' => 'Potwierdź zmianę statusu',
+    'toggle_admin_question' => 'Czy jesteś pewien, że chcesz zmienić status użytkownika  ',
     'confirm_user_delete' => 'Potwierdź usunięcie użytkownika',
     'delete_user_question-1' => 'Czy jesteś pewien, że chcesz usunąć użytkownika ',
     'delete_user_question-2' => '? Akcja jest nieodwracalna.',
