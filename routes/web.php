@@ -20,10 +20,10 @@ Route::get('/admindashboard/', [AdminDashboardController::class, 'index'])
     ->name('admindashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::post('/profile/toggle-admin', [ProfileController::class, 'toggleAdmin'])->name('profile.toggleAdmin');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::patch('/profile/toggle-admin/{id)', [ProfileController::class, 'toggleAdmin'])->name('profile.toggleAdmin');
     Route::resource('article', ArticleController::class);
 });
 

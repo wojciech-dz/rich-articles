@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\AvailableLocales;
 use App\Models\User;
+use App\Models\UserTypes;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -61,13 +64,17 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function toggleAdmin(string $id)
+    public function toggleAdmin(Request $request): JsonResponse
     {
+        $id = $request->all()['id'];
         if ($user = User::findOrFail($id)) {
-            $user->is_admin = !$user->is_admin;
+            $user->user_type = $user->isAdmin() ? UserTypes::USER : UserTypes::ADMIN;
             $user->save();
         }
 
-        return redirect()->intended(route('admindashboard', absolute: false));
+        return Response::json ([
+            'success' => true,
+            'info' => 'User type changed',
+        ]);
     }
 }

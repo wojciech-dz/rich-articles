@@ -22,8 +22,35 @@
     </div>
 
     <x-bladewind::modal
+        backdrop_can_close="false"
+        name="old-toggle-admin"
+        type="warning"
+        ok_button_action="saveProfileAjax()"
+        ok_button_label="Update"
+        close_after_action="false"
+        title="{{ __('dashboard.confirm_toggle_admin') }}"
+    >
+
+        {{ __('dashboard.toggle_admin_question') }}
+        '<b class="name"></b>'?
+
+        <x-bladewind::processing
+            name="status-updating"
+            message="Updating user status." />
+
+        <x-bladewind::process-complete
+            name="profile-update-yes"
+            process_completed_as="passed"
+            button_label="Done"
+            button_action="hideModal('form-mode-ajax')"
+            message="Status updated successfully." />
+    </x-bladewind::modal>
+
+    <x-bladewind::modal
         name="toggle-admin"
-        type="error" title="{{ __('dashboard.confirm_toggle_admin') }}">
+        type="warning"
+        title="{{ __('ddashboard.confirm_toggle_admin') }}"
+    >
         {{ __('dashboard.toggle_admin_question') }}
         '<b class="name"></b>'?
     </x-bladewind::modal>
@@ -44,11 +71,17 @@
         {{ __('dashboard.delete_article_question-2') }}
     </x-bladewind::modal>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         toggleAdmin = (id, name) => {
-            console.log(id, name);
-            showModal('toggle-admin');
-            domEl('.bw-toggle-admin .name').innerText = `${name}`;
+            const question = "{{ __('dashboard.toggle_admin_question') }}" + name;
+            const userResponse = confirm(question);
+            if (userResponse) {
+                saveProfileAjax(id);
+                // domEl('.bw-toggle-admin .name').innerText = `${name}`;
+            } else {
+            }
+            // showModal('toggle-admin');
         }
 
         deleteUser = (id, name) => {
@@ -65,6 +98,31 @@
 
         redirect = (url) => {
             window.open(url);
+        }
+
+        saveProfileAjax = (id) => {
+            var token = document.querySelector('meta[name="csrf-token"]').content
+            if (validateForm('.profile-form-ajax')){
+                unhide('.status-updating');
+                hide('.profile-form-ajax');
+                hideModalActionButtons('form-mode-ajax');
+                makeAjaxCall(id, token);
+            } else {
+                return false;
+            }
+        }
+
+        makeAjaxCall = (id, token) => {
+            $.ajax({
+                method: "POST",
+                url: "/profile/toggle-admin",
+                data: {"_token": token, "id": id},
+                datatype: 'json',
+                success: function(result) {
+                    hide('.status-updating');
+                    unhide('.profile-update-yes')
+                }
+            });
         }
     </script>
 </x-app-layout>

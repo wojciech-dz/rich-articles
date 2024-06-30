@@ -11,7 +11,7 @@ class AdminDashboardController extends Controller
 {
     public function index(Request $request): View
     {
-        $users = DB::table('users')->orderBy('name')->paginate(2);
+        $users = DB::table('users')->orderBy('name')->paginate(5);
         $usersIcons = [
             "icon:chat | tip:send message | color:green | click:sendMessage('{email}')",
             "icon:pencil | click:toggleAdmin({id}, '{name}')",
