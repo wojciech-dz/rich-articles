@@ -15,9 +15,13 @@ Route::get('/dashboard', [\App\Http\Controllers\ArticleController::class, 'index
     ->middleware(['auth', 'verified', SetLocale::class])
     ->name('dashboard');
 
-Route::get('/admindashboard/', [AdminDashboardController::class, 'index'])
+Route::get('/admindashboard', [AdminDashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('admindashboard');
+
+Route::post('/admindashboard/send-notification', [AdminDashboardController::class, 'sendNotification'])
+    ->middleware(['auth', 'verified'])
+    ->name('sendNotification');
 
 Route::middleware('auth')->group(function () {
     Route::delete('/profile/user-delete', [ProfileController::class, 'deleteUser'])->name('profile.delete');
@@ -25,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/article/delete', [ArticleController::class, 'deleteArticle'])->name('article.delete');
     Route::resource('article', ArticleController::class);
 });
 

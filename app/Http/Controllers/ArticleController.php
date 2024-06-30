@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Response;
 use Illuminate\View\View;
 
 class ArticleController extends Controller
@@ -17,7 +18,10 @@ class ArticleController extends Controller
      */
     public function index(Request $request): View
     {
-        $articles = DB::table('articles')->orderBy('title')->paginate(3);
+        $articles = DB::table('articles')
+            ->where('author_id', '=', Auth::id())
+            ->orderBy('title')
+            ->paginate(3);
         $actionIcons = [
             "icon:trash | color:red | click:deleteArticle({id}, '{title}')",
         ];
@@ -40,7 +44,6 @@ class ArticleController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255|unique:App\Models\Article,title',
-//            'title' => ['required', 'string', 'max:255'],
             'meat' => 'required|string|max:2000',
         ]);
         Article::create([
@@ -48,8 +51,6 @@ class ArticleController extends Controller
             'contents' => $request->meat,
             'author_id' => $request->user()->id,
         ]);
-
-//        Session::flash('success', 'Article created successfully!');
 
         return redirect(route('dashboard', absolute: false));
     }
@@ -84,5 +85,22 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         //
+    }
+
+    public function deleteArticle(Request $request): JsonResponse
+    {
+        $id = $request->all()['params']['id'];
+        $userId = Auth::id();
+        if ($article = Article::findOrFail($id)) {
+            if ($article->author_id === $userId || Auth::user()->isAdmin()) {
+                dd('bede kasować');
+                $article->delete();
+            }
+        }
+
+        return Response::json ([
+            'success' => true,
+            'info' => 'Article successfully deleted',
+        ]);
     }
 }

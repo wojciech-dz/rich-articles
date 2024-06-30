@@ -40,11 +40,12 @@
                     <x-bladewind::textarea
                         id="meat"
                         name="meat"
-{{--                        toolbar="true"--}}
                         rows="5"
+                        required="true"
                         label="{{ __('dashboard.article_contents') }}"
                         placeholder="{{ __('dashboard.new_article') }}"
-                        required="true"
+                        {{--                        toolbar="true"--}}
+                        {{--                        except="underline, align, indent, link, color, background, list, image, blockquote, code-block, clean"--}}
                         error_message="{{ __('dashboard.fill_article_contents') }}"
                         show_error_inline="true"
                     />
@@ -76,10 +77,38 @@
         {{ __('dashboard.delete_article_question-2') }}
     </x-bladewind::modal>
 
+
     <script>
         deleteArticle = (id, title) => {
-            showModal('delete-article');
-            domEl('.bw-delete-article .title').innerText = `${title}`;
+            const question = "{{ __('dashboard.delete_article_question-1') }}"
+                + title
+                + "{{ __('dashboard.delete_article_question-2') }}";
+            const userResponse = confirm(question);
+            if (userResponse) {
+                deleteArticleAjax(id);
+                // domEl('.bw-delete-article .title').innerText = `${title}`;
+            }
+        }
+
+        deleteArticleAjax = (id) => {
+            var token = document.querySelector('meta[name="csrf-token"]').content,
+                url = "/article/delete",
+                method = 'DELETE',
+                params = {"id": id};
+            makeAjaxCall(url, method, token, params);
+        }
+
+        makeAjaxCall = (url, method, token, params) => {
+            $.ajax({
+                method: method,
+                url: url,
+                data: {"_token": token, "params": params},
+                datatype: 'json',
+                success: function(result) {
+                    hide('.status-updating');
+                    unhide('.profile-update-yes')
+                }
+            });
         }
     </script>
 </x-app-layout>

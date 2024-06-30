@@ -109,8 +109,13 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'office@laravel.com'),
+        'name' => env('MAIL_FROM_NAME', 'Office'),
+    ],
+
+    'reply_to' => [
+        'address' => 'biuro@laravel.com',
+        'name' => 'Biuro'
     ],
 
 ];

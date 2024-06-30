@@ -71,8 +71,22 @@
         {{ __('dashboard.delete_article_question-2') }}
     </x-bladewind::modal>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+        sendMessage = (id) => {
+            $.ajax({
+                method: 'POST',
+                url: "/admindashboard/send-notification",
+                data: {
+                    "_token": document.querySelector('meta[name="csrf-token"]').content,
+                    "params": {'id': id}
+                },
+                datatype: 'json',
+                success: function(result) {
+                    console.log('powiadomienie wysłane')
+                }
+            });
+        }
+
         toggleAdmin = (id, name) => {
             const question = "{{ __('dashboard.toggle_admin_question') }}" + name;
             const userResponse = confirm(question);
@@ -96,9 +110,14 @@
         }
 
         deleteArticle = (id, title) => {
-            console.log(id, title);
-            showModal('delete-article');
-            domEl('.bw-delete-article .title').innerText = `${title}`;
+            const question = "{{ __('dashboard.delete_article_question-1') }}"
+                + title
+                + "{{ __('dashboard.delete_article_question-2') }}";
+            const userResponse = confirm(question);
+            if (userResponse) {
+                deleteArticleAjax(id);
+                // domEl('.bw-delete-article .title').innerText = `${title}`;
+            }
         }
 
         redirect = (url) => {
@@ -125,14 +144,15 @@
                 url = "/profile/user-delete",
                 method = 'DELETE',
                 params = {"id": id};
-            if (validateForm('.profile-form-ajax')){
-                // unhide('.status-updating');
-                // hide('.profile-form-ajax');
-                // hideModalActionButtons('form-mode-ajax');
-                makeAjaxCall(url, method, token, params);
-            } else {
-                return false;
-            }
+            makeAjaxCall(url, method, token, params);
+        }
+
+        deleteArticleAjax = (id) => {
+            var token = document.querySelector('meta[name="csrf-token"]').content,
+                url = "/article/delete",
+                method = 'DELETE',
+                params = {"id": id};
+            makeAjaxCall(url, method, token, params);
         }
 
         makeAjaxCall = (url, method, token, params) => {
