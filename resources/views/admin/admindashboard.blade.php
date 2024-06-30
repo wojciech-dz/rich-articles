@@ -79,15 +79,20 @@
             if (userResponse) {
                 saveProfileAjax(id);
                 // domEl('.bw-toggle-admin .name').innerText = `${name}`;
-            } else {
             }
             // showModal('toggle-admin');
         }
 
         deleteUser = (id, name) => {
-            console.log(id, name);
-            showModal('delete-user');
-            domEl('.bw-delete-user .name').innerText = `${name}`;
+            // showModal('delete-user');
+            const question = "{{ __('dashboard.delete_user_question-1') }}"
+                + name
+                + "{{ __('dashboard.delete_user_question-2') }}";
+            const userResponse = confirm(question);
+            if (userResponse) {
+                deleteProfileAjax(id);
+                // domEl('.bw-delete-user .name').innerText = `${name}`;
+            }
         }
 
         deleteArticle = (id, title) => {
@@ -101,22 +106,40 @@
         }
 
         saveProfileAjax = (id) => {
-            var token = document.querySelector('meta[name="csrf-token"]').content
+            var token = document.querySelector('meta[name="csrf-token"]').content,
+                url = "/profile/toggle-admin",
+                method = 'POST',
+                params = {"id": id};
             if (validateForm('.profile-form-ajax')){
-                unhide('.status-updating');
-                hide('.profile-form-ajax');
-                hideModalActionButtons('form-mode-ajax');
-                makeAjaxCall(id, token);
+                // unhide('.status-updating');
+                // hide('.profile-form-ajax');
+                // hideModalActionButtons('form-mode-ajax');
+                makeAjaxCall(url, method, token, params);
             } else {
                 return false;
             }
         }
 
-        makeAjaxCall = (id, token) => {
+        deleteProfileAjax = (id) => {
+            var token = document.querySelector('meta[name="csrf-token"]').content,
+                url = "/profile/user-delete",
+                method = 'DELETE',
+                params = {"id": id};
+            if (validateForm('.profile-form-ajax')){
+                // unhide('.status-updating');
+                // hide('.profile-form-ajax');
+                // hideModalActionButtons('form-mode-ajax');
+                makeAjaxCall(url, method, token, params);
+            } else {
+                return false;
+            }
+        }
+
+        makeAjaxCall = (url, method, token, params) => {
             $.ajax({
-                method: "POST",
-                url: "/profile/toggle-admin",
-                data: {"_token": token, "id": id},
+                method: method,
+                url: url,
+                data: {"_token": token, "params": params},
                 datatype: 'json',
                 success: function(result) {
                     hide('.status-updating');

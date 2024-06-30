@@ -66,7 +66,7 @@ class ProfileController extends Controller
 
     public function toggleAdmin(Request $request): JsonResponse
     {
-        $id = $request->all()['id'];
+        $id = $request->all()['params']['id'];
         if ($user = User::findOrFail($id)) {
             $user->user_type = $user->isAdmin() ? UserTypes::USER : UserTypes::ADMIN;
             $user->save();
@@ -75,6 +75,19 @@ class ProfileController extends Controller
         return Response::json ([
             'success' => true,
             'info' => 'User type changed',
+        ]);
+    }
+
+    public function deleteUser(Request $request): JsonResponse
+    {
+        $id = $request->all()['params']['id'];
+        if ($user = User::findOrFail($id)) {
+            $user->delete();
+        }
+
+        return Response::json ([
+            'success' => true,
+            'info' => 'User successfully deleted',
         ]);
     }
 }
