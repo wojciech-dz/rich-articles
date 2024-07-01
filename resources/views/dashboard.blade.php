@@ -87,7 +87,6 @@
             const userResponse = confirm(question);
             if (userResponse) {
                 deleteArticleAjax(id);
-                // domEl('.bw-delete-article .title').innerText = `${title}`;
             }
         }
 
@@ -106,8 +105,7 @@
                 data: {"_token": token, "params": params},
                 datatype: 'json',
                 success: function(result) {
-                    hide('.status-updating');
-                    unhide('.profile-update-yes')
+                    showNotification('Akcja wykonana', 'Artykuł został usunięty.');
                 }
             });
         }
