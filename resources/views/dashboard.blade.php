@@ -44,8 +44,8 @@
                         required="true"
                         label="{{ __('dashboard.article_contents') }}"
                         placeholder="{{ __('dashboard.new_article') }}"
-                        {{--                        toolbar="true"--}}
-                        {{--                        except="underline, align, indent, link, color, background, list, image, blockquote, code-block, clean"--}}
+{{--                        toolbar="true"--}}
+{{--                        except="underline, align, indent, link, color, background, list, image, blockquote, code-block, clean"--}}
                         error_message="{{ __('dashboard.fill_article_contents') }}"
                         show_error_inline="true"
                     />

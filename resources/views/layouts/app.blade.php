@@ -35,6 +35,15 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <!-- Page Footer -->
+            <footer class="bg-white dark:bg-gray-800 shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <a href="{{ route('contact') }}" class="'font-medium text-sm text-green-600' leading-tight">
+                        {{ __('mail.contact-us') }}
+                    </a>
+                </div>
+            </footer>
         </div>
     </body>
 </html>

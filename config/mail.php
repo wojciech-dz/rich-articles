@@ -115,7 +115,11 @@ return [
 
     'reply_to' => [
         'address' => 'biuro@laravel.com',
-        'name' => 'Biuro'
+        'name' => 'Biuro',
+    ],
+
+    'contact_mail' => [
+        'address' => env('APP_CONTACT_MAIL_ADDRESS', 'contact@office.com')
     ],
 
 ];
