@@ -2,6 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+        <x-bladewind::notification />
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('dashboard.dashboard') }}
         </h2>

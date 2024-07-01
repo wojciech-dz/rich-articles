@@ -1,5 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
+        <x-bladewind::notification />
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Admin`s Dashboard') }}
         </h2>
@@ -83,6 +84,7 @@
                 datatype: 'json',
                 success: function(result) {
                     console.log('powiadomienie wysłane')
+                    showNotification('Wysłano', 'Powiadomienie wysłane do użytkownika');
                 }
             });
         }
@@ -92,20 +94,16 @@
             const userResponse = confirm(question);
             if (userResponse) {
                 saveProfileAjax(id);
-                // domEl('.bw-toggle-admin .name').innerText = `${name}`;
             }
-            // showModal('toggle-admin');
         }
 
         deleteUser = (id, name) => {
-            // showModal('delete-user');
             const question = "{{ __('dashboard.delete_user_question-1') }}"
                 + name
                 + "{{ __('dashboard.delete_user_question-2') }}";
             const userResponse = confirm(question);
             if (userResponse) {
                 deleteProfileAjax(id);
-                // domEl('.bw-delete-user .name').innerText = `${name}`;
             }
         }
 
@@ -116,7 +114,6 @@
             const userResponse = confirm(question);
             if (userResponse) {
                 deleteArticleAjax(id);
-                // domEl('.bw-delete-article .title').innerText = `${title}`;
             }
         }
 
@@ -129,14 +126,7 @@
                 url = "/profile/toggle-admin",
                 method = 'POST',
                 params = {"id": id};
-            if (validateForm('.profile-form-ajax')){
-                // unhide('.status-updating');
-                // hide('.profile-form-ajax');
-                // hideModalActionButtons('form-mode-ajax');
-                makeAjaxCall(url, method, token, params);
-            } else {
-                return false;
-            }
+            makeAjaxCall(url, method, token, params);
         }
 
         deleteProfileAjax = (id) => {
@@ -162,8 +152,7 @@
                 data: {"_token": token, "params": params},
                 datatype: 'json',
                 success: function(result) {
-                    hide('.status-updating');
-                    unhide('.profile-update-yes')
+                    showNotification('Akcja wykonana', 'Element został zmieniony');
                 }
             });
         }
