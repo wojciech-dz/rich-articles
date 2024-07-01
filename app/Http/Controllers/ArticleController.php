@@ -93,7 +93,6 @@ class ArticleController extends Controller
         $userId = Auth::id();
         if ($article = Article::findOrFail($id)) {
             if ($article->author_id === $userId || Auth::user()->isAdmin()) {
-                dd('bede kasować');
                 $article->delete();
             }
         }
