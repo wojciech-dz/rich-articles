@@ -68,6 +68,12 @@
             </form>
         </div>
     </div>
+    <style>
+        #contents_editor {
+            background-color: white;
+            color: black;
+        }
+    </style>
 
     <x-bladewind::modal
         name="delete-article"
