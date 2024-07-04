@@ -17,7 +17,7 @@
                 <x-users-admin :users="$users" :action_icons="$users_icons" />
             </div>
             <div>
-                <x-articles :articles="$articles" :action_icons="$articles_icons" />
+                <x-articles-admin :articles="$articles" :action_icons="$articles_icons" />
             </div>
         </div>
     </div>

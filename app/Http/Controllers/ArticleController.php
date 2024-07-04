@@ -21,7 +21,7 @@ class ArticleController extends Controller
         $articles = DB::table('articles')
             ->where('author_id', '=', Auth::id())
             ->orderBy('title')
-            ->paginate(3);
+            ->paginate(3, ['*'], 'articles');
         $actionIcons = [
             "icon:trash | color:red | click:deleteArticle({id}, '{title}')",
         ];
