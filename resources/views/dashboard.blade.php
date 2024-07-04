@@ -1,7 +1,6 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
         <x-bladewind::notification />
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('dashboard.dashboard') }}
@@ -38,23 +37,23 @@
                 </div>
 
                 <div>
+                    <input name="meat" id="article_contents" type="hidden" value="">
+                </div>
+
+                <div>
                     <x-bladewind::textarea
-                        id="meat"
-                        name="meat"
-                        rows="5"
+                        id="contents_editor"
+                        name="contents_editor"
                         required="true"
-                        label="{{ __('dashboard.article_contents') }}"
                         placeholder="{{ __('dashboard.new_article') }}"
-{{--                        toolbar="true"--}}
-{{--                        except="underline, align, indent, link, color, background, list, image, blockquote, code-block, clean"--}}
-                        error_message="{{ __('dashboard.fill_article_contents') }}"
-                        show_error_inline="true"
+                        toolbar="true"
                     />
                 </div>
 
                 <div class="text-center">
                     <x-bladewind::button
                         name="btn-save"
+                        id="btn-save"
                         has_spinner="true"
                         type="primary"
                         outline="true"
@@ -80,6 +79,11 @@
 
 
     <script>
+        const submitButton = document.querySelector('#btn-save');
+        submitButton.addEventListener('click', function () {
+            article_contents.value = quill_contents_editor.root.innerHTML
+        });
+
         deleteArticle = (id, title) => {
             const question = "{{ __('dashboard.delete_article_question-1') }}"
                 + title
